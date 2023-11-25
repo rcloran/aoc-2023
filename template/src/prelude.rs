@@ -6,14 +6,19 @@ pub use anyhow::{Context, Result};
 
 pub use itertools::Itertools;
 
+pub use nom::character::complete::{
+    i32 as nom_i32, i64 as nom_i64, u32 as nom_u32, u64 as nom_u64,
+};
 pub use nom::{
-    bytes::complete::tag,
-    character::complete::{multispace0, multispace1, newline},
+    branch::alt,
+    bytes::complete::{is_a, is_not, tag},
+    character::complete::{
+        alpha0, alpha1, alphanumeric0, alphanumeric1, multispace0, multispace1, newline, one_of,
+    },
     combinator::all_consuming,
     multi::*,
     sequence::*,
-    IResult
+    IResult,
 };
-pub use nom::character::complete::{i32 as nom_i32, i64 as nom_i64, u32 as nom_u32, u64 as nom_u64};
 
 pub use util::*;
