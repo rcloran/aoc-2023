@@ -10,9 +10,9 @@ pub fn stdin_read() -> Result<String> {
 }
 
 pub fn stdin_lines() -> impl Iterator<Item = String> {
-    stdin().lock().lines().filter_map(|l| l.ok())
+    stdin().lock().lines().map_while(Result::ok)
 }
 
 pub fn stdin_lines_u8() -> impl Iterator<Item = Vec<u8>> {
-    stdin().lock().split(b'\n').filter_map(|l| l.ok())
+    stdin().lock().split(b'\n').map_while(Result::ok)
 }

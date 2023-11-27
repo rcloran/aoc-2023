@@ -15,8 +15,8 @@ where
             .map(|(n, [])| {
                 n.parse()
                     .or_else(|e| {
-                        if n.starts_with("-") {
-                            n[1..].parse()
+                        if let Some(nonneg) = n.strip_prefix('-') {
+                            nonneg.parse()
                         } else {
                             Err(e)
                         }
@@ -34,16 +34,15 @@ pub fn extract_groups<S>(
 where
     S: AsRef<str>,
 {
-    lines.map(move |l| {
+    lines.flat_map(move |l| {
         re.captures_iter(l.as_ref())
-            .map(|c| {
+            .map(move |c| {
                 c.iter()
                     .skip(1)
                     .map(|op_m| op_m.map(|m| m.as_str().to_owned()))
                     .collect::<Vec<_>>()
             })
-            .flatten()
-            .collect()
+            .collect::<Vec<_>>()
     })
 }
 
