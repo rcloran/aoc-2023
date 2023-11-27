@@ -2,3 +2,6 @@ debug/
 target/
 Cargo.lock
 **/*.rs.bk
+day*/example*.txt
+day*/input*.txt
+day-test/
