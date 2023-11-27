@@ -64,7 +64,7 @@ where
     T: FromStr,
     <T as FromStr>::Err: Debug,
 {
-    let re = Regex::new(r"-?[0-9]+").unwrap();
+    let re = Regex::new(r"[-+]?[0-9]+").unwrap();
     extract(lines, re)
 }
 
