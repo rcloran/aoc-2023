@@ -10,13 +10,12 @@ where
     <T as FromStr>::Err: Debug,
 {
     lines.map(move |l| {
-        re.captures_iter(l.as_ref())
-            .map(|c| c.extract())
-            .map(|(n, [])| {
-                n.parse()
+        re.find_iter(l.as_ref())
+            .map(|m| {
+                m.as_str().parse()
                     .or_else(|e| {
-                        if n.starts_with("-") {
-                            n[1..].parse()
+                        if let Some(nonneg) = m.as_str().strip_prefix('-') {
+                            nonneg.parse()
                         } else {
                             Err(e)
                         }
@@ -34,26 +33,24 @@ pub fn extract_groups<S>(
 where
     S: AsRef<str>,
 {
-    lines.map(move |l| {
+    lines.flat_map(move |l| {
         re.captures_iter(l.as_ref())
-            .map(|c| {
+            .map(move |c| {
                 c.iter()
                     .skip(1)
                     .map(|op_m| op_m.map(|m| m.as_str().to_owned()))
                     .collect::<Vec<_>>()
             })
-            .flatten()
-            .collect()
+            .collect::<Vec<_>>()
     })
 }
 
 pub fn extract_u8(lines: impl Iterator<Item = Vec<u8>>, re: &BytesRegex) -> Vec<Vec<Vec<u8>>> {
     lines
         .map(|l| {
-            re.captures_iter(&l)
-                .map(|c| c.extract())
-                .map(|(n, [])| n.to_vec())
-                .collect()
+            re.find_iter(&l)
+                .map(|m| m.as_bytes().to_owned())
+                .collect::<Vec<_>>()
         })
         .collect()
 }
@@ -64,7 +61,7 @@ where
     T: FromStr,
     <T as FromStr>::Err: Debug,
 {
-    let re = Regex::new(r"-?[0-9]+").unwrap();
+    let re = Regex::new(r"[-+]?[0-9]+").unwrap();
     extract(lines, re)
 }
 
