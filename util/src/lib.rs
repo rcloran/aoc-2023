@@ -1,8 +1,5 @@
-mod nom;
-pub use crate::nom::*;
+pub mod prelude;
 
-mod stdin;
-pub use crate::stdin::*;
-
-mod re;
-pub use crate::re::*;
+pub mod nom;
+pub mod stdin;
+pub mod re;
