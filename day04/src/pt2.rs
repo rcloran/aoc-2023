@@ -6,11 +6,10 @@ fn main() -> anyhow::Result<()> {
 
     let mut copies = vec![1; input.len()];
     for (i, card) in input.into_iter().enumerate() {
-        for j in (i+1)..=(i + card.matches()) {
+        for j in (i + 1)..=(i + card.matches()) {
             copies[j] += copies[i];
         }
-        
-    };
+    }
 
     println!("{}", copies.into_iter().sum::<usize>());
     Ok(())
