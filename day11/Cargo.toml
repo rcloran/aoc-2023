@@ -1,0 +1,24 @@
+[package]
+name = "day11"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+anyhow = { workspace = true }
+counter = { workspace = true }
+itertools = { workspace = true }
+nom = { workspace = true }
+rand = { workspace = true }
+rayon = { workspace = true }
+regex = { workspace = true }
+util = { path = "../util" }
+
+[[bin]]
+name = "pt1"
+path = "src/pt1.rs"
+
+[[bin]]
+name = "pt2"
+path = "src/pt2.rs"
